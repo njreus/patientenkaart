@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Patiëntenkaart Nederland – Beoordeel uw patiënt</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #0B5E45;
+  --primary-dark: #084432;
+  --primary-light: #E8F4EF;
+  --primary-mid: #1A8A64;
+  --accent: #E8B84B;
+  --text: #1C2B25;
+  --muted: #6B7F7A;
+  --border: #D4E4DC;
+  --bg: #F7FAF8;
+  --white: #FFFFFF;
+  --star: #E8B84B;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+/* Coming soon banner */
+.coming-soon-banner {
+  background: var(--primary);
+  color: white;
+  text-align: center;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.coming-soon-banner .pill {
+  background: var(--accent);
+  color: var(--primary);
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+  margin-right: 8px;
+  font-size: 12px;
+}
+
+/* Header */
+header {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.logo-name { font-weight: 800; font-family: 'Nunito', sans-serif; font-size: 17px; color: var(--primary); line-height: 1.05; }
+.logo-sub { font-family: 'Nunito', sans-serif; font-size: 10px; color: var(--muted); letter-spacing: 0.2px; margin-top: 2px; }
+
+nav { display: flex; gap: 4px; align-items: center; }
+nav a {
+  font-size: 14px;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+nav a:hover, nav a.active { background: var(--primary-light); color: var(--primary); }
+.nav-cta { background: var(--primary) !important; color: white !important; font-weight: 500; }
+.nav-cta:hover { background: var(--primary-dark) !important; color: white !important; }
+.nav-cta.active { background: var(--primary-dark) !important; }
+
+/* Pages */
+.page { display: none; }
+.page.active { display: block; }
+
+/* === HOME === */
+.hero {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 80px 24px 90px;
+  text-align: center;
+}
+.hero-badge {
+  display: inline-block;
+  background: var(--primary-light);
+  color: var(--primary);
+  padding: 4px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 22px;
+}
+.hero h1 { font-weight: 800;
+  font-family: 'Nunito', sans-serif;
+  font-size: 54px;
+  line-height: 1.1;
+  color: var(--primary);
+  max-width: 720px;
+  margin: 0 auto 20px;
+}
+.hero p {
+  font-size: 18px;
+  color: var(--muted);
+  max-width: 620px;
+  margin: 0 auto 38px;
+  line-height: 1.6;
+}
+.hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  padding: 13px 28px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s;
+  font-family: 'Nunito', sans-serif;
+}
+.btn-primary:hover { background: var(--primary-dark); }
+.btn-secondary {
+  background: var(--white);
+  color: var(--primary);
+  padding: 13px 28px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: 'Nunito', sans-serif;
+}
+.btn-secondary:hover { background: var(--primary-light); }
+
+/* Stats bar */
+.stats-bar { background: var(--primary); color: white; padding: 32px 24px; }
+.stats-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  gap: 64px;
+  flex-wrap: wrap;
+}
+.stat-item { text-align: center; }
+.stat-number { font-family: 'Nunito', sans-serif; font-size: 38px; display: block; }
+.stat-label { font-size: 13px; opacity: 0.7; }
+
+/* Features section */
+.features { max-width: 1100px; margin: 0 auto; padding: 70px 24px; }
+.section-title { font-weight: 800; font-family: 'Nunito', sans-serif; font-size: 34px; color: var(--primary); text-align: center; margin-bottom: 8px; }
+.section-sub { text-align: center; color: var(--muted); margin-bottom: 44px; font-size: 15px; }
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 22px;
+}
+.feature-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px;
+}
+.feature-icon {
+  width: 46px;
+  height: 46px;
+  background: var(--primary-light);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  font-size: 22px;
+}
+.feature-card h3 { font-weight: 700; font-family: 'Nunito', sans-serif; font-size: 19px; color: var(--primary); margin-bottom: 8px; }
+.feature-card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+/* === SHARED PAGE HERO === */
+.page-hero {
+  background: var(--primary);
+  color: white;
+  padding: 60px 24px;
+  text-align: center;
+}
+.page-hero h1 { font-weight: 800; font-family: 'Nunito', sans-serif; font-size: 40px; margin-bottom: 12px; }
+.page-hero p { opacity: 0.85; max-width: 580px; margin: 0 auto; font-size: 17px; line-height: 1.6; }
+
+/* Content wrapper */
+.content-wrap { max-width: 900px; margin: 0 auto; padding: 60px 24px; }
+
+/* === OVER ONS === */
+.ons-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px;
+  margin-bottom: 22px;
+}
+.ons-card h2 { font-weight: 700; font-family: 'Nunito', sans-serif; font-size: 24px; color: var(--primary); margin-bottom: 14px; }
+.ons-card p { color: var(--text); margin-bottom: 12px; line-height: 1.75; }
+.ons-card p:last-child { margin-bottom: 0; }
+
+.feiten-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  margin-top: 22px;
+}
+.feit-item { background: var(--primary-light); border-radius: 10px; padding: 20px; text-align: center; }
+.feit-number { font-family: 'Nunito', sans-serif; font-size: 30px; color: var(--primary); display: block; }
+.feit-label { font-size: 12px; color: var(--primary); opacity: 0.7; line-height: 1.4; }
+
+/* === ARCHETYPES === */
+.archetype-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+.archetype-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 26px;
+}
+.arch-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  letter-spacing: 0.3px;
+}
+.bg-gold { background: #FDF3D0; color: #7A5C10; }
+.bg-blue { background: #D0E8FF; color: #1B4A7A; }
+.bg-purple { background: #EAD0FF; color: #5B1B8B; }
+.bg-red { background: #FFD0D0; color: #8B1B1B; }
+.bg-orange { background: #FFE8D0; color: #8B4A1B; }
+.bg-green { background: #D0F0E0; color: #1B5C3A; }
+
+.archetype-card h3 { font-weight: 700; font-family: 'Nunito', sans-serif; font-size: 21px; color: var(--primary); margin-bottom: 5px; }
+.arch-subtitle { font-size: 13px; color: var(--muted); font-style: italic; margin-bottom: 12px; display: block; }
+.archetype-card p { font-size: 14px; color: var(--text); line-height: 1.6; }
+
+.stars { display: flex; gap: 3px; margin-top: 16px; }
+.star { color: var(--star); font-size: 17px; }
+.star-e { color: var(--border); font-size: 17px; }
+
+/* === FORMULIER === */
+.form-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px;
+  margin-bottom: 22px;
+}
+.form-card h2 { font-weight: 700; font-family: 'Nunito', sans-serif; font-size: 22px; color: var(--primary); margin-bottom: 22px; }
+
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 6px; }
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 15px;
+  color: var(--text);
+  background: var(--bg);
+  transition: border-color 0.15s;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: var(--white);
+}
+.form-note { font-size: 12px; color: var(--muted); margin-top: 5px; }
+
+/* Star rating rows */
+.rating-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+.rating-row:last-child { border-bottom: none; padding-bottom: 0; }
+.rating-label { font-size: 15px; color: var(--text); flex: 1; }
+.rating-sub { font-size: 12px; color: var(--muted); display: block; margin-top: 2px; }
+.star-rating { display: flex; gap: 4px; flex-shrink: 0; }
+.star-rating span {
+  font-size: 26px;
+  color: var(--border);
+  cursor: pointer;
+  transition: color 0.1s, transform 0.1s;
+  user-select: none;
+  line-height: 1;
+}
+.star-rating span:hover { transform: scale(1.1); }
+.star-rating span.lit { color: var(--star); }
+
+/* Badge selector */
+.badge-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.badge-sel {
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-size: 13px;
+  cursor: pointer;
+  background: var(--bg);
+  color: var(--text);
+  transition: all 0.15s;
+  user-select: none;
+  font-family: 'Nunito', sans-serif;
+}
+.badge-sel:hover { border-color: var(--primary); color: var(--primary); }
+.badge-sel.on { background: var(--primary); color: white; border-color: var(--primary); }
+
+/* Disclaimer */
+.disclaimer {
+  background: #FFFBEC;
+  border: 1px solid #F0D98A;
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-bottom: 22px;
+  font-size: 14px;
+  color: #7A5C10;
+  line-height: 1.6;
+}
+.disclaimer strong { color: #5C430C; }
+
+/* Success message */
+.success-msg {
+  display: none;
+  background: #D8F0E5;
+  border: 1px solid #8BCFAB;
+  border-radius: 10px;
+  padding: 24px;
+  text-align: center;
+  color: #1B5C3A;
+}
+.success-msg h3 { font-family: 'Nunito', sans-serif; font-size: 24px; margin-bottom: 10px; }
+.success-msg p { font-size: 14px; line-height: 1.6; margin-bottom: 8px; }
+
+/* Satire notice */
+.satire-notice {
+  background: var(--primary-light);
+  border-top: 1px solid var(--border);
+  padding: 14px 24px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* Footer */
+footer { background: var(--text); color: white; padding: 44px 24px; margin-top: 0; }
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+.footer-logo { font-family: 'Nunito', sans-serif; font-size: 20px; color: white; margin-bottom: 6px; }
+.footer-sub { font-size: 12px; opacity: 0.45; }
+.footer-links { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+.footer-links a { color: white; opacity: 0.55; font-size: 13px; text-decoration: none; cursor: pointer; transition: opacity 0.15s; }
+.footer-links a:hover { opacity: 1; }
+
+/* Highlight text */
+em { font-style: italic; }
+
+/* Responsive */
+@media (max-width: 660px) {
+  .hero h1 { font-weight: 800; font-size: 36px; }
+  .stats-inner { gap: 32px; }
+  nav a:not(.nav-cta):not(#nav-home) { display: none; }
+  .rating-row { flex-direction: column; align-items: flex-start; gap: 10px; }
+}
+</style>
+</head>
+<body>
+
+<div class="coming-soon-banner">
+  <span class="pill">BINNENKORT</span>
+  Patiëntenkaart Nederland lanceert in april 2027 — <a href="#" onclick="showPage('wachtlijst'); return false;" style="color:var(--accent); text-decoration:underline;">Meld u nu aan als early adopter</a>
+</div>
+
+<header>
+  <div class="header-inner">
+    <div class="logo" onclick="showPage('home')" style="gap:12px;">
+      <svg viewBox="0 0 60 86" xmlns="http://www.w3.org/2000/svg" style="width:40px;height:auto;flex-shrink:0;">
+        <g fill="#E8B84B">
+          <circle cx="25" cy="4" r="2.5"/>
+          <circle cx="18" cy="11" r="2.5"/><circle cx="25" cy="11" r="2.5"/><circle cx="32" cy="11" r="2.5"/>
+          <circle cx="11" cy="18" r="2.5"/><circle cx="18" cy="18" r="2.5"/><circle cx="25" cy="18" r="2.5"/><circle cx="32" cy="18" r="2.5"/><circle cx="39" cy="18" r="2.5"/>
+          <circle cx="11" cy="25" r="2.5"/><circle cx="18" cy="25" r="2.5"/><circle cx="25" cy="25" r="2.5"/><circle cx="32" cy="25" r="2.5"/><circle cx="39" cy="25" r="2.5"/><circle cx="46" cy="25" r="2.5"/>
+          <circle cx="4" cy="32" r="2.5"/><circle cx="11" cy="32" r="2.5"/><circle cx="18" cy="32" r="2.5"/><circle cx="25" cy="32" r="2.5"/><circle cx="32" cy="32" r="2.5"/><circle cx="39" cy="32" r="2.5"/><circle cx="46" cy="32" r="2.5"/>
+          <circle cx="11" cy="39" r="2.5"/><circle cx="18" cy="39" r="2.5"/><circle cx="25" cy="39" r="2.5"/><circle cx="32" cy="39" r="2.5"/><circle cx="39" cy="39" r="2.5"/><circle cx="46" cy="39" r="2.5"/><circle cx="53" cy="39" r="2.5"/>
+          <circle cx="11" cy="46" r="2.5"/><circle cx="18" cy="46" r="2.5"/><circle cx="25" cy="46" r="2.5"/><circle cx="32" cy="46" r="2.5"/><circle cx="39" cy="46" r="2.5"/><circle cx="46" cy="46" r="2.5"/><circle cx="53" cy="46" r="2.5"/>
+          <circle cx="18" cy="53" r="2.5"/><circle cx="25" cy="53" r="2.5"/><circle cx="32" cy="53" r="2.5"/><circle cx="39" cy="53" r="2.5"/><circle cx="46" cy="53" r="2.5"/><circle cx="53" cy="53" r="2.5"/>
+          <circle cx="18" cy="60" r="2.5"/><circle cx="25" cy="60" r="2.5"/><circle cx="32" cy="60" r="2.5"/><circle cx="39" cy="60" r="2.5"/><circle cx="46" cy="60" r="2.5"/>
+          <circle cx="18" cy="67" r="2.5"/><circle cx="25" cy="67" r="2.5"/><circle cx="32" cy="67" r="2.5"/><circle cx="39" cy="67" r="2.5"/>
+          <circle cx="11" cy="74" r="2.5"/><circle cx="25" cy="74" r="2.5"/><circle cx="32" cy="74" r="2.5"/><circle cx="39" cy="74" r="2.5"/>
+          <circle cx="25" cy="81" r="2.5"/><circle cx="32" cy="81" r="2.5"/>
+        </g>
+        <circle cx="38" cy="34" r="14" fill="white" fill-opacity="0.92" stroke="#0B5E45" stroke-width="3"/>
+        <text x="38" y="40" text-anchor="middle" font-size="15" fill="#E8B84B" font-family="sans-serif">★</text>
+        <line x1="48" y1="45" x2="57" y2="55" stroke="#0B5E45" stroke-width="3.5" stroke-linecap="round"/>
+      </svg>
+      <div>
+        <div class="logo-name">Patiëntenkaart</div>
+        <div class="logo-name">Nederland</div>
+        <div class="logo-sub">Behandelaarsfederatie Nederland</div>
+      </div>
+    </div>
+    <nav>
+      <a onclick="showPage('home')" id="nav-home" class="active">Home</a>
+      <a onclick="showPage('overons')" id="nav-overons">Over ons</a>
+      <a onclick="showPage('archetypes')" id="nav-archetypes">Patiëntprofielen</a>
+      <a onclick="showPage('formulier')" id="nav-formulier">Beoordelen</a>
+      <a onclick="showPage('wachtlijst')" id="nav-wachtlijst" class="nav-cta">Aanmelden</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ HOME ============ -->
+<div id="page-home" class="page active">
+
+  <div class="hero">
+    <div class="hero-badge">Initiatief van Behandelaarsfederatie Nederland</div>
+    <h1>Samen voor de best passende patiënt</h1>
+    <p>Patiëntenkaart Nederland biedt onafhankelijke keuze-informatie over patiënten. Zo kunnen zorgverleners kiezen voor een patiënt die het beste past bij hun specialisme en werktijden.</p>
+    <div class="hero-buttons">
+      <button class="btn-primary" onclick="showPage('formulier')">Beoordeel uw patiënt</button>
+      <button class="btn-secondary" onclick="showPage('wachtlijst')">Aanmelden als early adopter</button>
+    </div>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stats-inner">
+      <div class="stat-item">
+        <span class="stat-number">847</span>
+        <span class="stat-label">zorgverleners aangemeld</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">0</span>
+        <span class="stat-label">gepubliceerde beoordelingen *</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">∞</span>
+        <span class="stat-label">patiënten te beoordelen</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">2027</span>
+        <span class="stat-label">verwachte lancering</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="features">
+    <h2 class="section-title">Waarom Patiëntenkaart?</h2>
+    <p class="section-sub">* De 0 beoordelingen zijn nog niet geverifieerd door onze partijdige redactie.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">⏱</div>
+        <h3>Stiptheid</h3>
+        <p>Beoordeel hoe punctueel uw patiënt verschijnt. Inclusief subschaal voor "kwartier te vroeg terwijl de wachtkamer nog dicht is".</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📋</div>
+        <h3>Voorbereiding</h3>
+        <p>Had de patiënt zijn medicatielijst bij zich, of beschreef hij "dat ene pilletje van mijn vorige huisarts. Die is inmiddels gestopt."?</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔍</div>
+        <h3>Therapietrouw</h3>
+        <p>Volgt de patiënt uw advies op, of heeft hij na het consult toch zijn eigen behandelplan opgezocht via Google?</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💬</div>
+        <h3>Communicatie</h3>
+        <p>Noemde de patiënt de eigenlijke klacht bij binnenkomst, of pas op het moment dat u al opstond om hem uit te laten?</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🏆</div>
+        <h3>Badges</h3>
+        <p>Ken uw patiënt een badge toe. Van "Modelpatiënt" tot "Heeft zichzelf gediagnosticeerd via TikTok".</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <h3>Soort van anoniem</h3>
+        <p>Beoordelingen zijn uitsluitend zichtbaar voor de behandelend arts. En de patiënt zelf. En zijn huisarts. En eigenlijk iedereen.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎭</div>
+        <h3>Beschikbaarheid</h3>
+        <p>Verwacht de patiënt dat u zijn casus meeneemt naar huis en er uw vrije avonden aan besteedt? Inclusief subschaal voor "heeft duidelijk te veel House MD gekeken".</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============ OVER ONS ============ -->
+<div id="page-overons" class="page">
+
+  <div class="page-hero">
+    <h1>Wat is Patiëntenkaart Nederland?</h1>
+    <p>Samen voor de best passende patiënt</p>
+  </div>
+
+  <div class="content-wrap">
+
+    <div class="ons-card">
+      <h2>Wat is Patiëntenkaart Nederland?</h2>
+      <p>Patiëntenkaart Nederland is een platform dat onafhankelijke keuze-informatie biedt over patiënten. Zo kunnen zorgverleners kiezen voor een patiënt die het beste past bij hun wensen, specialisme en beschikbare spreekuurminuten.</p>
+      <p>Patiëntenkaart Nederland is een initiatief van Behandelaarsfederatie Nederland.</p>
+    </div>
+
+    <div class="ons-card">
+      <h2>Waarom Patiëntenkaart Nederland?</h2>
+      <p>Patiëntenkaart Nederland is een manier om zorgverleners een stem, invloed en keuze-informatie te geven. De waarderingen van zorgverleners laten zien hoe het is om iemand te behandelen — vertelt de patiënt zijn klachten helder, of begint hij met "eigenlijk ben ik hier voor iets anders" op het moment dat u al opstaat? Verschijnt hij op tijd, ook na de zoveelste herinnerings-sms? Luistert hij naar uw advies, of googlet hij na het consult toch zijn eigen behandelplan bij? En praat hij kort, bondig en to-the-point — of heeft hij daar drie kwartier voor nodig?</p>
+      <p>Ook biedt Patiëntenkaart Nederland inzicht in andere kwaliteitsaspecten van zorgontvangers, zoals voorbereiding en het vertrouwen dat de patiënt stelt in zijn behandelaar — mits dat vertrouwen niet halverwege het traject is ingeruild voor een second opinion in het buitenland.</p>
+    </div>
+
+    <div class="ons-card">
+      <h2>Onbetrouwbaar en uitgesproken partijdig</h2>
+      <p>Patiëntenkaart Nederland is een product van Behandelaarsfederatie Nederland. Patiëntenkaart Nederland is onbetrouwbaar, uitgesproken partijdig en heeft — in tegenstelling tot andere platformen — <strong>wel</strong> een winstoogmerk, want ook artsen moeten leven.</p>
+      <p>Onze partijdige redactie controleert alle waarderingen voordat ze online zichtbaar worden. De waarderingen die ons aanstaan komen online. Overige waarderingen komen ook online, maar dan onder de rubriek "Eerlijke Mening".</p>
+      <p>Patiëntenkaart Nederland zorgt voor een veilige online plek voor zorgverlener en patiënt. Zo helpen we mee aan het verder verbeteren van de kwaliteit van de zorg. En helpen we elkaar om de passende patiënt te vinden.</p>
+    </div>
+
+    <div class="ons-card">
+      <h2>Feiten en cijfers</h2>
+      <p>In 2025 ontstond het idee voor Patiëntenkaart Nederland tijdens een cataractoperatie in Breda. De patiënt vroeg na de ingreep of ze een voorbeeldige patiënt was geweest. De chirurg antwoordde dat hij haar, als hij haar op een website zou beoordelen, een 10 uit 10 zou geven. De website bestond op dat moment nog niet.</p>
+      <p>In april 2027 lanceert Patiëntenkaart Nederland officieel. In de eerste week melden zich naar verwachting duizenden zorgverleners aan. De belastingdienst wordt op de hoogte gehouden.</p>
+      <div class="feiten-grid">
+        <div class="feit-item">
+          <span class="feit-number">847</span>
+          <span class="feit-label">aangemelde zorgverleners</span>
+        </div>
+        <div class="feit-item">
+          <span class="feit-number">2025</span>
+          <span class="feit-label">jaar van het idee</span>
+        </div>
+        <div class="feit-item">
+          <span class="feit-number">1</span>
+          <span class="feit-label">directe aanleiding (een 10/10 patiënt)</span>
+        </div>
+        <div class="feit-item">
+          <span class="feit-number">0</span>
+          <span class="feit-label">juridische complicaties (nog niet geteld)</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============ ARCHETYPES ============ -->
+<div id="page-archetypes" class="page">
+
+  <div class="page-hero">
+    <h1>Patiëntprofielen</h1>
+    <p>Herkent u een van deze profielen bij uw patiënten? Stem bij lancering op het meest herkenbare archetype — of draag er zelf een voor.</p>
+  </div>
+
+  <div class="content-wrap">
+    <div class="archetype-grid">
+
+      <div class="archetype-card">
+        <span class="arch-badge bg-gold">🏆 Modelpatiënt</span>
+        <h3>De Voorbeeldige</h3>
+        <span class="arch-subtitle">"Ik was toch een goede patiënt, hè?"</span>
+        <p>Verschijnt op tijd, heeft alle paperassen bij zich, neemt de medicatie correct in en stelt uitsluitend relevante vragen. Vraagt bescheiden of ze als patiënt voldeed. Antwoord: ja. 10 uit 10.</p>
+        <div class="stars">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+      </div>
+
+      <div class="archetype-card">
+        <span class="arch-badge bg-blue">🔍 Zelfgediagnosticeerd</span>
+        <h3>De Zelfredenaar</h3>
+        <span class="arch-subtitle">"Ik heb het al opgezocht. Het is keratoconus."</span>
+        <p>Komt binnen met een uitgeprinte differentiaaldiagnose afkomstig van vijf verschillende forums. De diagnose blijkt pingueculum. De patiënt is teleurgesteld en overweegt gelukkig een second opinion.</p>
+        <div class="stars">
+          <span class="star">★</span><span class="star">★</span><span class="star-e">★</span><span class="star-e">★</span><span class="star-e">★</span>
+        </div>
+      </div>
+
+      <div class="archetype-card">
+        <span class="arch-badge bg-purple">📚 PubMed-lezer</span>
+        <h3>De Documentalist</h3>
+        <span class="arch-subtitle">"Ik heb de literatuur bijgehouden."</span>
+        <p>Verschijnt met 47 uitgeprinte pagina's wetenschappelijke artikelen, inclusief één in het Mandarijn. Stelt vragen over methodologische keuzes in een RCT uit 2003 die u zelf ook twijfelachtig vond.</p>
+        <div class="stars">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star-e">★</span><span class="star-e">★</span>
+        </div>
+      </div>
+
+      <div class="archetype-card">
+        <span class="arch-badge bg-red">🚪 Deurkrukspecialist</span>
+        <h3>De Supertipper</h3>
+        <span class="arch-subtitle">"Trouwens, dokter, nog één dingetje..."</span>
+        <p>Noemt de eigenlijke klacht pas op het moment dat u al opstaat om hem uit te laten, uw hand reeds op de deurkruk. Dan volgt een tweede klacht. Soms een derde.</p>
+        <div class="stars">
+          <span class="star">★</span><span class="star-e">★</span><span class="star-e">★</span><span class="star-e">★</span><span class="star-e">★</span>
+        </div>
+      </div>
+
+      <div class="archetype-card">
+        <span class="arch-badge bg-orange">🌍 Internationaal georiënteerd</span>
+        <h3>De Goed Geïnformeerde</h3>
+        <span class="arch-subtitle">"In Duitsland zeiden ze iets heel anders."</span>
+        <p>Heeft second opinions gevraagd in drie landen en één telefonisch consult gehad met een specialist in de VS. Uw mening is de vijfde. Wordt als zodanig behandeld.</p>
+        <div class="stars">
+          <span class="star">★</span><span class="star">★</span><span class="star-e">★</span><span class="star-e">★</span><span class="star-e">★</span>
+        </div>
+      </div>
+
+      <div class="archetype-card">
+        <span class="arch-badge bg-green">⏰ Stipt</span>
+        <h3>De Hypertippe</h3>
+        <span class="arch-subtitle">"Ik stond al een uur op u te wachten."</span>
+        <p>Arriveert 45 minuten vóór het afgesproken tijdstip. De balie is nog niet open. Staat buiten. In de regen. Zal dit later vermelden in een beoordeling op ZorgkaartNederland.nl.</p>
+        <div class="stars">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star-e">★</span>
+        </div>
+      </div>
+
+      <div class="archetype-card">
+        <span class="arch-badge bg-purple">🎭 Hoofdrol</span>
+        <h3>De Hoofdrolspeler</h3>
+        <span class="arch-subtitle">"Mijn casus is toch wel heel bijzonder, hè?"</span>
+        <p>Is ervan overtuigd dat zijn klachten een buitengewoon zeldzame diagnose verbergen die alleen een toegewijde arts na drie slapeloze nachten kan ontrafelen. Heeft een favoriete aflevering van House MD als referentie. Begrijpt niet waarom u al naar huis gaat.</p>
+        <div class="stars">
+          <span class="star">★</span><span class="star">★</span><span class="star-e">★</span><span class="star-e">★</span><span class="star-e">★</span>
+        </div>
+      </div>
+
+    </div><!-- end archetype-grid -->
+
+    <div style="text-align: center; margin-top: 50px; padding: 36px; background: var(--white); border: 1px solid var(--border); border-radius: 12px;">
+      <h3 style="font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 26px; color: var(--primary); margin-bottom: 10px;">Maak uw eigen patiëntprofiel aan</h3>
+      <p style="color: var(--muted); font-size: 15px; max-width: 520px; margin: 0 auto 22px;">Herkent u een archetype dat hier nog ontbreekt? Bij lancering van de website in april 2027 kunt u zelf patiëntprofielen aanmaken en stemmen op de meest herkenbare. De winnaar krijgt een digitale onderscheiding die nergens voor geldig is.</p>
+      <button class="btn-primary" onclick="showPage('wachtlijst')">Aanmelden als early adopter</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FORMULIER ============ -->
+<div id="page-formulier" class="page">
+
+  <div class="page-hero">
+    <h1>Beoordeel uw patiënt</h1>
+    <p>Vul hieronder uw beoordeling in. Alle velden zijn verplicht — behalve de velden die niet verplicht zijn.</p>
+  </div>
+
+  <div class="content-wrap">
+
+    <div class="disclaimer">
+      <strong>Juridische mededeling:</strong> Dit beoordelingsformulier is satirisch van aard. Het beoordelen van patiënten op een publiek platform is in werkelijkheid niet mogelijk vanwege het medisch beroepsgeheim, de AVG, de WGBO, de beroepscode en het gezond verstand. Elke gelijkenis met bestaande patiënten berust op onvermijdelijke herkenning.
+    </div>
+
+    <div class="form-card">
+      <h2>Patiëntgegevens</h2>
+      <div class="form-group">
+        <label>Patiëntomschrijving</label>
+        <input type="text" placeholder="bijv. 'de meneer met het kleine witte pilletje'">
+        <p class="form-note">Gebruik geen BSN-nummers, achternamen of andere identificerende gegevens. Of toch. Wij checken het niet.</p>
+      </div>
+      <div class="form-group">
+        <label>Uw specialisme</label>
+        <select>
+          <option>Oogheelkunde</option>
+          <option>Huisartsgeneeskunde</option>
+          <option>Cardiologie</option>
+          <option>Chirurgie</option>
+          <option>Dermatologie</option>
+          <option>Gynaecologie</option>
+          <option>KNO</option>
+          <option>Longgeneeskunde</option>
+          <option>Neurologie</option>
+          <option>Orthopedie</option>
+          <option>Reumatologie</option>
+          <option>Urologie</option>
+          <option>Veterinaire geneeskunde (wij begrijpen het)</option>
+          <option>Anders</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Type consult</label>
+        <select>
+          <option>Regulier spreekuur</option>
+          <option>Operatie (succesvol)</option>
+          <option>Operatie (patiënt stelde vragen tijdens de ingreep)</option>
+          <option>Spoedgeval dat bleek mee te vallen</option>
+          <option>Telefonisch consult na Google-sessie van patiënt</option>
+          <option>Herhaalconsult voor dezelfde onbehandelde klacht</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <h2>Beoordeling</h2>
+      <div class="rating-row">
+        <div class="rating-label">
+          Stiptheid
+          <span class="rating-sub">Verschijnt de patiënt op tijd? (Noch 45 minuten te vroeg, noch te laat.)</span>
+        </div>
+        <div class="star-rating" id="r-stiptheid">
+          <span onclick="rate('r-stiptheid',1)">★</span><span onclick="rate('r-stiptheid',2)">★</span><span onclick="rate('r-stiptheid',3)">★</span><span onclick="rate('r-stiptheid',4)">★</span><span onclick="rate('r-stiptheid',5)">★</span>
+        </div>
+      </div>
+      <div class="rating-row">
+        <div class="rating-label">
+          Voorbereiding
+          <span class="rating-sub">Medicatielijst aanwezig? Klachten helder omschreven vóór binnenkomst?</span>
+        </div>
+        <div class="star-rating" id="r-voorbereiding">
+          <span onclick="rate('r-voorbereiding',1)">★</span><span onclick="rate('r-voorbereiding',2)">★</span><span onclick="rate('r-voorbereiding',3)">★</span><span onclick="rate('r-voorbereiding',4)">★</span><span onclick="rate('r-voorbereiding',5)">★</span>
+        </div>
+      </div>
+      <div class="rating-row">
+        <div class="rating-label">
+          Therapietrouw
+          <span class="rating-sub">Volgt de patiënt uw advies op en niet dat van een wellness-influencer?</span>
+        </div>
+        <div class="star-rating" id="r-therapietrouw">
+          <span onclick="rate('r-therapietrouw',1)">★</span><span onclick="rate('r-therapietrouw',2)">★</span><span onclick="rate('r-therapietrouw',3)">★</span><span onclick="rate('r-therapietrouw',4)">★</span><span onclick="rate('r-therapietrouw',5)">★</span>
+        </div>
+      </div>
+      <div class="rating-row">
+        <div class="rating-label">
+          Vertrouwen in behandelaar
+          <span class="rating-sub">Zonder tussentijdse second opinions in het buitenland</span>
+        </div>
+        <div class="star-rating" id="r-vertrouwen">
+          <span onclick="rate('r-vertrouwen',1)">★</span><span onclick="rate('r-vertrouwen',2)">★</span><span onclick="rate('r-vertrouwen',3)">★</span><span onclick="rate('r-vertrouwen',4)">★</span><span onclick="rate('r-vertrouwen',5)">★</span>
+        </div>
+      </div>
+      <div class="rating-row">
+        <div class="rating-label">
+          Communicatie
+          <span class="rating-sub">Noemde de patiënt de hoofdklacht bij aanvang — niet bij de deur?</span>
+        </div>
+        <div class="star-rating" id="r-communicatie">
+          <span onclick="rate('r-communicatie',1)">★</span><span onclick="rate('r-communicatie',2)">★</span><span onclick="rate('r-communicatie',3)">★</span><span onclick="rate('r-communicatie',4)">★</span><span onclick="rate('r-communicatie',5)">★</span>
+        </div>
+      </div>
+      <div class="rating-row">
+        <div class="rating-label">
+          Algemene indruk
+          <span class="rating-sub">Zou u deze patiënt aanbevelen aan een collega?</span>
+        </div>
+        <div class="star-rating" id="r-algemeen">
+          <span onclick="rate('r-algemeen',1)">★</span><span onclick="rate('r-algemeen',2)">★</span><span onclick="rate('r-algemeen',3)">★</span><span onclick="rate('r-algemeen',4)">★</span><span onclick="rate('r-algemeen',5)">★</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <h2>Badges</h2>
+      <p style="color: var(--muted); font-size: 14px;">Ken uw patiënt een of meer badges toe (meerdere mogelijk):</p>
+      <div class="badge-grid">
+        <div class="badge-sel" onclick="this.classList.toggle('on')">🏆 Modelpatiënt</div>
+        <div class="badge-sel" onclick="this.classList.toggle('on')">📱 TikTok-diagnose</div>
+        <div class="badge-sel" onclick="this.classList.toggle('on')">📚 PubMed-fanaat</div>
+        <div class="badge-sel" onclick="this.classList.toggle('on')">🌍 3+ landen bezocht</div>
+        <div class="badge-sel" onclick="this.classList.toggle('on')">⏰ Altijd te vroeg</div>
+        <div class="badge-sel" onclick="this.classList.toggle('on')">🕐 Altijd te laat</div>
+        <div class="badge-sel" onclick="this.classList.toggle('on')">💊 Vergeet medicatie</div>
+        <div class="badge-sel" onclick="this.classList.toggle('on')">🚪 Deurkrukklacht</div>
+        <div class="badge-sel" onclick="this.classList.toggle('on')">📝 Lijst van 12 klachten</div>
+        <div class="badge-sel" onclick="this.classList.toggle('on')">🤔 Twijfelt aan diagnose</div>
+        <div class="badge-sel" onclick="this.classList.toggle('on')">🤖 ChatGPT-second opinion</div>
+        <div class="badge-sel" onclick="this.classList.toggle('on')">⭐ 10 uit 10</div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <h2>Toelichting</h2>
+      <div class="form-group">
+        <label>Uw beoordeling in eigen woorden</label>
+        <textarea rows="4" style="resize: vertical;" placeholder="Bijv: 'Een voorbeeldige patiënt die na een succesvolle cataractoperatie informeerde of ze het goed had gedaan. Zij had het inderdaad goed gedaan. 10 uit 10.'"></textarea>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 8px;">
+      <button class="btn-primary" onclick="submitForm()" style="font-size: 16px; padding: 15px 40px;">Beoordeling opslaan</button>
+      <p style="font-size: 12px; color: var(--muted); margin-top: 14px;">Beoordeling wordt niet gepubliceerd, niet opgeslagen en niet gelezen. Dit is satire.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============ WACHTLIJST ============ -->
+<div id="page-wachtlijst" class="page">
+
+  <div class="page-hero">
+    <h1>Aanmelden als early adopter</h1>
+    <p>Patiëntenkaart Nederland lanceert in april 2027. Meld u nu aan en ontvang als eerste toegang tot het platform — plus een digitale "Early Adopter" badge die nergens voor dient, maar toch.</p>
+  </div>
+
+  <div class="content-wrap">
+
+    <div style="max-width: 600px; margin: 0 auto 40px;">
+      <div class="form-card">
+        <h2>Aanmeldformulier</h2>
+        <p style="color: var(--muted); font-size: 14px; margin-bottom: 24px; margin-top: -10px;">Vul uw gegevens in om op de wachtlijst te komen. Wij nemen contact op zodra het platform beschikbaar is — of in april 2027, wat eerder komt.</p>
+
+        <div id="signup-form">
+          <div class="form-group">
+            <label>Naam</label>
+            <input type="text" id="inp-naam" placeholder="Dr. / Drs. / Prof. / ...">
+          </div>
+          <div class="form-group">
+            <label>Specialisme</label>
+            <select id="inp-spec">
+              <option value="">Kies uw specialisme</option>
+              <option>Oogheelkunde</option>
+              <option>Huisartsgeneeskunde</option>
+              <option>Cardiologie</option>
+              <option>Chirurgie</option>
+              <option>Dermatologie</option>
+              <option>Gynaecologie</option>
+              <option>KNO</option>
+              <option>Longgeneeskunde</option>
+              <option>Neurologie</option>
+              <option>Orthopedie</option>
+              <option>Reumatologie</option>
+              <option>Urologie</option>
+              <option>Veterinaire geneeskunde</option>
+              <option>Anders</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>E-mailadres</label>
+            <input type="email" id="inp-email" placeholder="u@ziekenhuis.nl">
+            <p class="form-note">Wij sturen geen spam. Alleen het allernoodzakelijkste. Maximaal één keer per dag.</p>
+          </div>
+          <div class="form-group">
+            <label>Waarom wilt u patiënten beoordelen? <span style="color:var(--muted); font-weight:400;">(optioneel)</span></label>
+            <textarea id="inp-waarom" rows="3" style="resize: vertical;" placeholder="Wij zijn oprecht benieuwd..."></textarea>
+          </div>
+          <button class="btn-primary" onclick="submitSignup()" style="width: 100%; font-size: 16px; padding: 14px;">Aanmelden voor de wachtlijst</button>
+        </div>
+
+        <div class="success-msg" id="success-msg">
+          <h3>Aanmelding ontvangen!</h3>
+          <p>U staat op de wachtlijst. Wij nemen contact op zodra Patiëntenkaart Nederland beschikbaar is — of zodra dit juridisch haalbaar blijkt. Wat later komt.</p>
+          <p style="margin-top: 10px; font-size: 13px; opacity: 0.8;">U bent aanmelding <strong>#848</strong>. Goed bezig.</p>
+        </div>
+      </div>
+
+      <div style="text-align: center; padding: 32px; background: var(--white); border: 1px solid var(--border); border-radius: 12px;">
+        <h3 style="font-family: 'Nunito', sans-serif; font-size: 24px; color: var(--primary); margin-bottom: 10px;">Al 847 zorgverleners gingen u voor</h3>
+        <p style="color: var(--muted); font-size: 14px; line-height: 1.6;">Waaronder oogartsen, huisartsen, chirurgen en één veterinair die opmerkte dat dieren aanzienlijk betere patiënten zijn.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Satire notice -->
+<div class="satire-notice">
+  Patiëntenkaart Nederland is een satirisch project. Het beoordelen van patiënten op een publiek platform is in de praktijk niet mogelijk en ook niet wenselijk. Dit platform bestaat uitsluitend voor de glimlach — en mogelijk voor een ESCRS-borrel.
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">Patiëntenkaart Nederland</div>
+      <div class="footer-sub">Initiatief van Behandelaarsfederatie Nederland &nbsp;·&nbsp; Satirisch platform &nbsp;·&nbsp; © 2027 &nbsp;·&nbsp; patientenkaart.nl</div>
+    </div>
+    <div class="footer-links">
+      <a onclick="showPage('overons')">Over ons</a>
+      <a onclick="showPage('archetypes')">Patiëntprofielen</a>
+      <a onclick="showPage('formulier')">Beoordelen</a>
+      <a onclick="showPage('wachtlijst')">Aanmelden</a>
+      <a>Privacy (n.v.t.)</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('nav a').forEach(function(a) { a.classList.remove('active'); });
+  var pg = document.getElementById('page-' + name);
+  var nav = document.getElementById('nav-' + name);
+  if (pg) pg.classList.add('active');
+  if (nav) nav.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function rate(id, val) {
+  var group = document.getElementById(id);
+  var spans = group.querySelectorAll('span');
+  spans.forEach(function(s, i) {
+    s.classList.toggle('lit', i < val);
+  });
+}
+
+function submitForm() {
+  alert('Beoordeling opgeslagen!\n\n(Niet echt. Maar in een betere wereld wel.)');
+}
+
+function submitSignup() {
+  var naam = document.getElementById('inp-naam').value.trim();
+  var email = document.getElementById('inp-email').value.trim();
+  var spec = document.getElementById('inp-spec').value;
+  if (!naam || !email || !spec) {
+    alert('Vul naam, e-mailadres en specialisme in.');
+    return;
+  }
+  document.getElementById('signup-form').style.display = 'none';
+  document.getElementById('success-msg').style.display = 'block';
+}
+</script>
+</body>
+</html>
